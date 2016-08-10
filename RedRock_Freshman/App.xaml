@@ -1,0 +1,15 @@
+﻿<Application
+    x:Class="RedRock_Freshman.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RedRock_Freshman"
+    xmlns:apptheme="using:RedRock_Freshman.Resource"
+    RequestedTheme="Light">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <apptheme:APPTheme x:Key="APPTheme"></apptheme:APPTheme>
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>
