@@ -19,6 +19,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Shapes;
+using Windows.UI.Xaml.Media.Animation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -219,6 +220,11 @@ namespace RedRock_Freshman.Pages
                 zuzhi_sc.ChangeView(null, 0.0, null, true);
             }
             zuzhi_listview_index = zuzhi_listview.SelectedIndex;
+        }
+
+        private void back_but_Click(object sender, RoutedEventArgs e)
+        {
+            FirstPage.firstpage.Second_Page_Back();
         }
     }
 }

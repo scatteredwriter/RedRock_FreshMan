@@ -312,7 +312,16 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Padding="20,5,20,15" Background="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}">
-            <TextBlock Text="重邮风采" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Button x:Name="back_but" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BackButtonStyle}" Click="back_but_Click">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00E;" />
+                </Button>
+            </Grid>
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="重邮风采" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
         <Grid Grid.Row="1">
             <Pivot x:Name="pivot" Grid.Row="1" Style="{StaticResource FengCaiPivotStyle}" SelectionChanged="pivot_SelectionChanged">
