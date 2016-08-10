@@ -87,7 +87,7 @@ namespace RedRock_Freshman.Pages
             {
                 case 0:
                     {
-
+                        second_frame.Navigate(typeof(StrategyPage));
                     }; break;
                 case 1:
                     {
@@ -95,7 +95,7 @@ namespace RedRock_Freshman.Pages
                     }; break;
                 case 2:
                     {
-                        second_frame.Navigate(typeof(FengCaiPage), second_frame.GetNavigationState());
+                        second_frame.Navigate(typeof(FengCaiPage));
                     }; break;
             }
         }
