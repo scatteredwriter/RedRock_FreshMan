@@ -96,6 +96,7 @@
     <Content Include="Json\fengcai_zuzhi_intro.json" />
     <Content Include="Json\fengcai_zuzhi_lists.json" />
     <Content Include="Json\fengcai_zuimei.json" />
+    <Content Include="Json\strategy_header_lists.json" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +107,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\fengcaiheaders.cs" />
+    <Compile Include="Model\StrategyHeader.cs" />
     <Compile Include="Model\zuzhi.cs" />
     <Compile Include="Model\zuzhi_intro.cs" />
     <Compile Include="Pages\FengCaiPage.xaml.cs">
@@ -114,11 +116,15 @@
     <Compile Include="Pages\FirstPage.xaml.cs">
       <DependentUpon>FirstPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StrategyPage.xaml.cs">
+      <DependentUpon>StrategyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\APPTheme.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\FengCaiViewModel.cs" />
     <Compile Include="ViewModel\FirstPageViewModel.cs" />
+    <Compile Include="ViewModel\StrategyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -150,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\FirstPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StrategyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
