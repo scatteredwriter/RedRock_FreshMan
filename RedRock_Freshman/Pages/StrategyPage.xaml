@@ -4,11 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RedRock_Freshman.Pages"
     xmlns:viewmodel="using:RedRock_Freshman.ViewModel"
+    xmlns:converter="using:RedRock_Freshman.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Page.Resources>
+        <converter:ExpandingConverter0 x:Key="expandingConverter0"/>
+        <converter:ExpandingConverter1 x:Key="expandingConverter1"/>
+        <converter:ExpandingConverter2 x:Key="expandingConverter2"/>
+        <converter:ExpandingConverter3 x:Key="expandingConverter3"/>
         <Style x:Key="StrategyStyle" TargetType="Pivot">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="IsTabStop" Value="False"/>
@@ -326,6 +331,67 @@
                         <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
                     </Grid>
                 </PivotItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Grid >
+                            <TextBlock Name="anquan" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                       Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Converter={StaticResource expandingConverter0},Mode=OneWay}" TextWrapping="Wrap"/>
+                            <Button Name="anquanButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="展开"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        </FontIcon>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                        <Grid >
+                            <TextBlock Name="ruxue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Ruxue,Converter={StaticResource expandingConverter1}}" TextWrapping="Wrap"/>
+                            <Button Name="ruxueButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="ruxueButton_Click" Style="{StaticResource ExpandingButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="展开"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        </FontIcon>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                        <Grid >
+                            <TextBlock Name="jiangxuejin" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                       Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Jiangxuejin,Converter={StaticResource expandingConverter2}}" TextWrapping="Wrap"/>
+                            <Button Name="jiangxuejinButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="jiangxuejinButton_Click" Style="{StaticResource ExpandingButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="展开"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        </FontIcon>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="jidianGrid" Height="0"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <WebView Name="JDhtml" Source="ms-appx-web:///Assets/jidian.html" Visibility="Collapsed"/>
+                            <TextBlock Name="xueshengshouce" Grid.Row="1" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"  
+                                       Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Xueshengshouce,Converter={StaticResource expandingConverter3}}" TextWrapping="Wrap"/>
+                            <Button Grid.Row="1" Name="xueshengshouceButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="xueshengshouceButton_Click" Style="{StaticResource ExpandingButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="展开"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        </FontIcon>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
             </PivotItem>
 
             <PivotItem Style="{StaticResource StrategyPivotItemStyle}">

@@ -35,16 +35,32 @@ namespace RedRock_Freshman.Pages
 
 
         StrategyViewModel viewmodel = new StrategyViewModel();
+
         public StrategyPage()
         {
+
             this.InitializeComponent();
 
-             PivotItem1_First_Step();
             SPivot.SelectedIndex = 0;
             this.DataContext = viewmodel;
 
         }
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
 
+            base.OnNavigatedTo(e);
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                viewmodel.Anquan = "";
+                viewmodel.Jiangxuejin = "";
+                viewmodel.Ruxue = "";
+                viewmodel.Xueshengshouce = "";
+
+                await PivotItem1_First_Step();
+
+                await Task.Delay(100);
+            }
+        }
         private void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -64,7 +80,7 @@ namespace RedRock_Freshman.Pages
                 return;
             }
         }
-        private async void PivotItem1_First_Step()
+        private async Task PivotItem1_First_Step()
         {
             StorageFile file;
             string json = "";
@@ -82,7 +98,95 @@ namespace RedRock_Freshman.Pages
             }
             viewmodel.Header = header_lists;
 
+            Ruxue_Get();
 
+        }
+
+
+        async void Ruxue_Get()
+        {
+            #region 入学须知
+            StorageFile anquan_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/anquan.txt", UriKind.Absolute));
+            StorageFile ruxue_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/ruxue.txt", UriKind.Absolute));
+            StorageFile jiangxuejin_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/jiangxuejin.txt", UriKind.Absolute));
+            StorageFile xueshengshouce_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/xueshengshouce.txt", UriKind.Absolute));
+
+
+            viewmodel.Anquan = await FileIO.ReadTextAsync(anquan_File);
+            viewmodel.Ruxue = await FileIO.ReadTextAsync(ruxue_File);
+            viewmodel.Jiangxuejin = await FileIO.ReadTextAsync(jiangxuejin_File);
+            viewmodel.Xueshengshouce = await FileIO.ReadTextAsync(xueshengshouce_File);
+
+            #endregion
+        }
+
+        private async void anquanButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.isReduced[0])
+            {
+
+                App.isReduced[0] = false;
+
+            }
+            else
+            {
+                App.isReduced[0] = true;
+            }
+            StorageFile anquan_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/anquan.txt", UriKind.Absolute));
+            viewmodel.Anquan = await FileIO.ReadTextAsync(anquan_File);
+        }
+
+        private async void ruxueButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.isReduced[1])
+            {
+
+                App.isReduced[1] = false;
+
+            }
+            else
+            {
+                App.isReduced[1] = true;
+            }
+            StorageFile ruxue_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/ruxue.txt", UriKind.Absolute));
+            viewmodel.Ruxue = await FileIO.ReadTextAsync(ruxue_File);
+        }
+
+        private async void jiangxuejinButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.isReduced[2])
+            {
+
+                App.isReduced[2] = false;
+
+            }
+            else
+            {
+                App.isReduced[2] = true;
+            }
+            StorageFile jiangxuejin_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/jiangxuejin.txt", UriKind.Absolute));
+            viewmodel.Jiangxuejin = await FileIO.ReadTextAsync(jiangxuejin_File);
+
+        }
+
+        private async void xueshengshouceButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.isReduced[3])
+            {
+
+                App.isReduced[3] = false;
+                JDhtml.Visibility = Visibility.Visible;
+                jidianGrid.Height =new GridLength(170);
+            }
+            else
+            {
+                App.isReduced[3] = true;
+                JDhtml.Visibility = Visibility.Collapsed;
+                jidianGrid.Height = new GridLength(0);
+
+            }
+            StorageFile xueshengshouce_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/xueshengshouce.txt", UriKind.Absolute));
+            viewmodel.Xueshengshouce = await FileIO.ReadTextAsync(xueshengshouce_File);
         }
     }
 }
