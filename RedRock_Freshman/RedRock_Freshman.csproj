@@ -89,6 +89,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\首页1.png" />
+    <Content Include="Assets\首页2.png" />
+    <Content Include="Assets\首页3.png" />
     <Content Include="Assets\jidian.html" />
     <Content Include="Json\fengcai_header_lists.json" />
     <Content Include="Json\fengcai_zuzhi_intro.json" />
@@ -117,6 +120,9 @@
     <Compile Include="Pages\FengCaiPage.xaml.cs">
       <DependentUpon>FengCaiPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\FirstPage.xaml.cs">
+      <DependentUpon>FirstPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StrategyPage.xaml.cs">
       <DependentUpon>StrategyPage.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,7 @@
     <Compile Include="Resource\APPTheme.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\FengCaiViewModel.cs" />
+    <Compile Include="ViewModel\FirstPageViewModel.cs" />
     <Compile Include="ViewModel\StrategyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +163,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\FengCaiPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FirstPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

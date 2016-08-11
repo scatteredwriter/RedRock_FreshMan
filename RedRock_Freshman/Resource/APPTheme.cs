@@ -76,6 +76,19 @@ namespace RedRock_Freshman.Resource
             }
         }
 
+        //偏灰的底色
+        public SolidColorBrush Backgorund_Color_Brush
+        {
+            get
+            {
+                return (SolidColorBrush)GetValue(Backgorund_Color_Brush_DP);
+            }
+            set
+            {
+                SetValue(Backgorund_Color_Brush_DP, value);
+            }
+        }
+
         //APP前景色
         public SolidColorBrush Content_Header_Color_Brush
         {
@@ -137,6 +150,8 @@ namespace RedRock_Freshman.Resource
         public static readonly DependencyProperty Second_White_Color_Brush_DP = DependencyProperty.Register("Second_White_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 201, 202, 203)))); //#c9cacb
 
         public static readonly DependencyProperty Foreground_Color_Brush_DP = DependencyProperty.Register("Foreground_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)))); //白色
+
+        public static readonly DependencyProperty Backgorund_Color_Brush_DP = DependencyProperty.Register("Backgorund_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 247, 247, 247)))); //偏灰的底色
 
         public static readonly DependencyProperty Content_Header_Color_Brush_DP = DependencyProperty.Register("Content_Header_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 51, 51, 51)))); //#333333
 

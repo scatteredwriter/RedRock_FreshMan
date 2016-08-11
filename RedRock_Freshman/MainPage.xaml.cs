@@ -31,7 +31,7 @@ namespace RedRock_Freshman
         {
             base.OnNavigatedTo(e);
 
-            frame.Navigate(typeof(Pages.StrategyPage));
+            frame.Navigate(typeof(Pages.FirstPage));
         }
     }
 }
