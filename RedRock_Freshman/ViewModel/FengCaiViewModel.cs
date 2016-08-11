@@ -67,5 +67,19 @@ namespace RedRock_Freshman.ViewModel
                 RaisePropertyChanged(nameof(ZuiMei));
             }
         }
+
+        private ObservableCollection<Model.yuanchuang> _yuanchuang;
+        public ObservableCollection<Model.yuanchuang> YuanChuang
+        {
+            get
+            {
+                return _yuanchuang;
+            }
+            set
+            {
+                _yuanchuang = value;
+                RaisePropertyChanged(nameof(_yuanchuang));
+            }
+        }
     }
 }

@@ -89,7 +89,7 @@ namespace RedRock_Freshman.Resource
             }
         }
 
-        //APP前景色
+        //#333333
         public SolidColorBrush Content_Header_Color_Brush
         {
             get
@@ -99,6 +99,32 @@ namespace RedRock_Freshman.Resource
             set
             {
                 SetValue(Content_Header_Color_Brush_DP, value);
+            }
+        }
+
+        //#555555
+        public SolidColorBrush Light_Gary_Color_Brush
+        {
+            get
+            {
+                return (SolidColorBrush)GetValue(Light_Gary_Color_Brush_DP);
+            }
+            set
+            {
+                SetValue(Light_Gary_Color_Brush_DP, value);
+            }
+        }
+
+        //#adadae
+        public SolidColorBrush ADADAE_Color_Brush
+        {
+            get
+            {
+                return (SolidColorBrush)GetValue(ADADAE_Color_Brush_DP);
+            }
+            set
+            {
+                SetValue(ADADAE_Color_Brush_DP, value);
             }
         }
 
@@ -141,7 +167,7 @@ namespace RedRock_Freshman.Resource
             }
         }
 
-        public static readonly DependencyProperty APP_Color_Brush_DP = DependencyProperty.Register("APP_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 105, 175, 245)))); //蓝色色调
+        public static readonly DependencyProperty APP_Color_Brush_DP = DependencyProperty.Register("APP_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 104, 175, 244)))); //蓝色色调
 
         public static readonly DependencyProperty Gary_Color_Brush_DP = DependencyProperty.Register("Gary_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 136, 136, 136)))); //5b5b5b
 
@@ -154,6 +180,10 @@ namespace RedRock_Freshman.Resource
         public static readonly DependencyProperty Backgorund_Color_Brush_DP = DependencyProperty.Register("Backgorund_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 247, 247, 247)))); //偏灰的底色
 
         public static readonly DependencyProperty Content_Header_Color_Brush_DP = DependencyProperty.Register("Content_Header_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 51, 51, 51)))); //#333333
+
+        public static readonly DependencyProperty Light_Gary_Color_Brush_DP = DependencyProperty.Register("Light_Gary_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 85, 85, 85)))); //#555555
+
+        public static readonly DependencyProperty ADADAE_Color_Brush_DP = DependencyProperty.Register("ADADAE_Color_Brush_DP", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 173, 173, 173)))); //#adadae
 
         public static readonly DependencyProperty Header_Size_DP = DependencyProperty.Register("Header_Size", typeof(int), typeof(APPTheme), new PropertyMetadata(18));
 

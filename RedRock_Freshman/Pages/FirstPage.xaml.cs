@@ -45,13 +45,12 @@ namespace RedRock_Freshman.Pages
             {
                 viewmodel.Page_Height = this.Height;
                 viewmodel.Page_Width = this.Width;
-                second_frame_trans.X = second_frame.ActualWidth;
             }
         }
 
         public void Second_Page_Forwoard() //页面前进方法
         {
-            (go_forward_sb.Children[0] as DoubleAnimation).From = second_frame.ActualWidth;
+            (go_forward_sb.Children[0] as DoubleAnimation).From = second_frame_trans.X;
             go_forward_sb.Begin();
         }
 
@@ -70,6 +69,10 @@ namespace RedRock_Freshman.Pages
         {
             viewmodel.Page_Height = e.NewSize.Height;
             viewmodel.Page_Width = e.NewSize.Width;
+            if (second_frame.GetNavigationState() == "1,0")
+            {
+                second_frame_trans.X = e.NewSize.Width;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

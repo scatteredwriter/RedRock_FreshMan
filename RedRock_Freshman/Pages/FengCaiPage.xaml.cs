@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.System;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -34,7 +35,10 @@ namespace RedRock_Freshman.Pages
         private int zuzhi_listview_index;
         private double[] pivotitem1_ver_offest;
 
+        private bool is_navigate_webview = false;
+
         private ViewModel.FengCaiViewModel viewmodel;
+        public static FengCaiPage fengcaipage;
 
         public FengCaiPage()
         {
@@ -43,6 +47,9 @@ namespace RedRock_Freshman.Pages
             zuzhi_listview_index = 0;
             viewmodel = new ViewModel.FengCaiViewModel();
             this.DataContext = viewmodel;
+            fengcaipage = this;
+            this.SizeChanged += FengCaiPage_SizeChanged;
+            webview_back_sb.Completed += Webview_back_sb_Completed;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -51,10 +58,11 @@ namespace RedRock_Freshman.Pages
 
             if (e.NavigationMode == NavigationMode.New)
             {
-                await PivotItem1_First_Step();
+                await First_Step();
                 pivotitem1_ver_offest = new double[viewmodel.ZuZhi.Count];
                 Dispatcher?.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
+                    webview_trans.X = this.ActualWidth;
                     PivotItem1_Add_Content(1);
                 });
                 await Task.Delay(100);
@@ -62,7 +70,15 @@ namespace RedRock_Freshman.Pages
             }
         }
 
-        private async Task PivotItem1_First_Step()
+        private void FengCaiPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (is_navigate_webview == false)
+            {
+                webview_trans.X = e.NewSize.Width;
+            }
+        }
+
+        private async Task First_Step()
         {
             StorageFile file;
             string json = "";
@@ -130,6 +146,31 @@ namespace RedRock_Freshman.Pages
                 zuimei_lists.Add(content);
             }
             viewmodel.ZuiMei = zuimei_lists;
+            #endregion
+
+            #region 得到原创重邮内容
+            json = await HttpRequest.Request.YuanChuang_Request();
+            if (json != null)
+            {
+                json_object = (JObject)JsonConvert.DeserializeObject(json);
+                JArray data = (JArray)json_object["data"];
+                ObservableCollection<Model.yuanchuang> yc_lists = new ObservableCollection<Model.yuanchuang>();
+                for (int i = 0; i < data.Count; i++)
+                {
+                    Model.yuanchuang item = new Model.yuanchuang();
+                    item.introduction = data[i]["introduction"].ToString();
+                    item.name = data[i]["name"].ToString();
+                    item.time = data[i]["time"].ToString();
+                    item.video_url = data[i]["video_url"].ToString();
+                    JArray photo = (JArray)data[i]["photo"];
+                    for (int j = 0; j < photo.Count; j++)
+                    {
+                        item.photo_src = photo[j]["photo_src"].ToString();
+                    }
+                    yc_lists.Add(item);
+                }
+                viewmodel.YuanChuang = yc_lists;
+            }
             #endregion
         }
 
@@ -215,11 +256,35 @@ namespace RedRock_Freshman.Pages
         {
             pivotitem1_ver_offest[zuzhi_listview_index] = zuzhi_sc.VerticalOffset;
             PivotItem1_Add_Content(2);
-            if (pivotitem1_ver_offest[zuzhi_listview.SelectedIndex] == 0.0)
+            if (pivotitem1_ver_offest[zuzhi_listview.SelectedIndex] != 0.0)
+            {
+                zuzhi_sc.ChangeView(null, pivotitem1_ver_offest[zuzhi_listview.SelectedIndex], null, true);
+            }
+            else
             {
                 zuzhi_sc.ChangeView(null, 0.0, null, true);
             }
             zuzhi_listview_index = zuzhi_listview.SelectedIndex;
+        }
+
+        private void yc_listview_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            webview.Navigate(typeof(WebViewPage), e.ClickedItem);
+            is_navigate_webview = true;
+            (webview_forward_sb.Children[0] as DoubleAnimation).From = webview_trans.X;
+            webview_forward_sb.Begin();
+        }
+
+        public void WebView_Back()
+        {
+            (webview_back_sb.Children[0] as DoubleAnimation).To = webview.ActualWidth;
+            webview_back_sb.Begin();
+        }
+
+        private void Webview_back_sb_Completed(object sender, object e)
+        {
+            webview.SetNavigationState("1,0");
+            is_navigate_webview = false;
         }
 
         private void back_but_Click(object sender, RoutedEventArgs e)

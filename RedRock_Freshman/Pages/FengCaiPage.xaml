@@ -216,8 +216,6 @@
         </Style>
         <Style x:Key="FengCaiPivotItemStyle" TargetType="PivotItem">
             <Setter Property="Background" Value="Transparent"/>
-            <!--<Setter Property="BorderBrush" Value="{Binding Source={StaticResource APPTheme},Path=Second_White_Color_Brush}"></Setter>
-            <Setter Property="BorderThickness" Value="0,1,0,0"></Setter>-->
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -290,7 +288,7 @@
             <Setter Property="TabNavigation" Value="Local"/>
             <Setter Property="IsHoldingEnabled" Value="True"/>
             <Setter Property="Padding" Value="0,0,0,0"></Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -300,6 +298,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Storyboard x:Name="webview_forward_sb">
+            <DoubleAnimation To="0" Storyboard.TargetName="webview_trans" Storyboard.TargetProperty="X" Duration="0:0:0.3"></DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="webview_back_sb">
+            <DoubleAnimation From="0" Storyboard.TargetName="webview_trans" Storyboard.TargetProperty="X" Duration="0:0:0.3"></DoubleAnimation>
+        </Storyboard>
     </Page.Resources>
 
     <Page.DataContext>
@@ -321,10 +325,10 @@
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00E;" />
                 </Button>
             </Grid>
-            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="重邮风采" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="重邮风采" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
         <Grid Grid.Row="1">
-            <Pivot x:Name="pivot" Grid.Row="1" Style="{StaticResource FengCaiPivotStyle}" SelectionChanged="pivot_SelectionChanged">
+            <Pivot x:Name="pivot" Style="{StaticResource FengCaiPivotStyle}" SelectionChanged="pivot_SelectionChanged">
                 <PivotItem Style="{StaticResource FengCaiPivotItemStyle}">
                     <PivotItem.Header>
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
@@ -364,6 +368,38 @@
                             <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
                         </Grid>
                     </PivotItem.Header>
+                    <Grid>
+                        <ListView x:Name="yc_listview" ItemsSource="{Binding YuanChuang}" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Enabled" ItemContainerStyle="{StaticResource FengCaiListViewItemStyle}" Style="{StaticResource FengCaiListViewStyle}" IsItemClickEnabled="True" ItemClick="yc_listview_ItemClick">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="15,12,15,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0" Margin="0,0,12,0">
+                                            <Rectangle Height="120" Width="210">
+                                                <Rectangle.Fill>
+                                                    <ImageBrush ImageSource="{Binding photo_src}" Stretch="Fill">
+                                                        <ImageBrush.Transform>
+                                                            <ScaleTransform CenterX="105" CenterY="60" ScaleY="2.4"></ScaleTransform>
+                                                        </ImageBrush.Transform>
+                                                    </ImageBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                        </Grid>
+                                        <RelativePanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <TextBlock x:Name="title" Text="{Binding name}" TextTrimming="CharacterEllipsis" FontSize="17" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" Margin="0,0,0,20"></TextBlock>
+                                            <TextBlock x:Name="jianjie" Text="简介：" FontWeight="Light" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="title" Margin="0,0,0,5"></TextBlock>
+                                            <TextBlock x:Name="jianjie_content" Text="{Binding introduction}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=ADADAE_Color_Brush}" RelativePanel.Below="title" RelativePanel.RightOf="jianjie"></TextBlock>
+                                            <TextBlock x:Name="shichang" Text="时长：" FontWeight="Light" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush}" RelativePanel.Below="jianjie" RelativePanel.AlignLeftWithPanel="True"></TextBlock>
+                                            <TextBlock x:Name="shichang_content" Text="{Binding time}" Foreground="{Binding Source={StaticResource APPTheme},Path=ADADAE_Color_Brush}" RelativePanel.AlignVerticalCenterWith="shichang" RelativePanel.RightOf="shichang"></TextBlock>
+                                        </RelativePanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
                 </PivotItem>
                 <PivotItem Style="{StaticResource FengCaiPivotItemStyle}">
                     <PivotItem.Header>
@@ -482,5 +518,10 @@
                 </PivotItem>
             </Pivot>
         </Grid>
+        <Frame x:Name="webview" Grid.Row="0" Grid.RowSpan="2">
+            <Frame.RenderTransform>
+                <TranslateTransform x:Name="webview_trans" X="0" Y="0"></TranslateTransform>
+            </Frame.RenderTransform>
+        </Frame>
     </Grid>
 </Page>
