@@ -21,6 +21,8 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.System;
+using Windows.UI.Text;
+using Windows.UI.Xaml.Media.Imaging;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -62,7 +64,6 @@ namespace RedRock_Freshman.Pages
                 pivotitem1_ver_offest = new double[viewmodel.ZuZhi.Count];
                 Dispatcher?.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    webview_trans.X = this.ActualWidth;
                     PivotItem1_Add_Content(1);
                 });
                 await Task.Delay(100);
@@ -72,6 +73,8 @@ namespace RedRock_Freshman.Pages
 
         private void FengCaiPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            viewmodel.Page_Width = e.NewSize.Width;
+            viewmodel.Page_Height = e.NewSize.Height;
             if (is_navigate_webview == false)
             {
                 webview_trans.X = e.NewSize.Width;
@@ -134,20 +137,6 @@ namespace RedRock_Freshman.Pages
             viewmodel.Zuzhi_Intro = intro_lists;
             #endregion
 
-            #region 得到最美重邮文字内容
-            file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuimei.json", UriKind.Absolute));
-            json = await FileIO.ReadTextAsync(file);
-            json_object = (JObject)JsonConvert.DeserializeObject(json);
-            JArray zuimei = (JArray)json_object["zuimei"];
-            ObservableCollection<string> zuimei_lists = new ObservableCollection<string>();
-            for (int i = 0; i < zuimei.Count; i++)
-            {
-                string content = zuimei[i]["content"].ToString();
-                zuimei_lists.Add(content);
-            }
-            viewmodel.ZuiMei = zuimei_lists;
-            #endregion
-
             #region 得到原创重邮内容
             json = await HttpRequest.Request.YuanChuang_Request();
             if (json != null)
@@ -170,6 +159,79 @@ namespace RedRock_Freshman.Pages
                     yc_lists.Add(item);
                 }
                 viewmodel.YuanChuang = yc_lists;
+            }
+            #endregion
+
+            #region 得到最美重邮文字内容
+            file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuimei.json", UriKind.Absolute));
+            json = await FileIO.ReadTextAsync(file);
+            json_object = (JObject)JsonConvert.DeserializeObject(json);
+            JArray zuimei = (JArray)json_object["zuimei"];
+            ObservableCollection<string> zuimei_lists = new ObservableCollection<string>();
+            for (int i = 0; i < zuimei.Count; i++)
+            {
+                string content = zuimei[i]["content"].ToString();
+                zuimei_lists.Add(content);
+            }
+            viewmodel.ZuiMei = zuimei_lists;
+            #endregion
+
+            #region 得到最美重邮图片
+            json = await HttpRequest.Request.ZuiMei_Request();
+            if (json != null)
+            {
+                json_object = (JObject)JsonConvert.DeserializeObject(json);
+                JArray data = (JArray)json_object["data"];
+                zuimei_lists = new ObservableCollection<string>();
+                for (int i = 0; i < data.Count; i++)
+                {
+                    JArray photo = (JArray)data[i]["photo"];
+                    zuimei_lists.Add(photo[0]["photo_src"].ToString());
+                }
+                viewmodel.ZuiMei_Photos = zuimei_lists;
+            }
+            #endregion
+
+            #region 得到优秀学子内容
+            json = await HttpRequest.Request.XueZi_Request();
+            if (json != null)
+            {
+                json_object = (JObject)JsonConvert.DeserializeObject(json);
+                JArray data = (JArray)json_object["data"];
+                ObservableCollection<Model.xuezi> xuezi_lists = new ObservableCollection<Model.xuezi>();
+                for (int i = 0; i < data.Count; i++)
+                {
+                    Model.xuezi item = new Model.xuezi();
+                    item.description = data[i]["description"].ToString();
+                    item.introduction = data[i]["introduction"].ToString();
+                    item.name = data[i]["name"].ToString();
+                    JArray photo = (JArray)data[i]["photo"];
+                    item.photo_src = photo[0]["photo_src"].ToString();
+                    item.photo_thumbnail_src = photo[0]["photo_thumbnail_src"].ToString();
+                    xuezi_lists.Add(item);
+                }
+                viewmodel.XueZi = xuezi_lists;
+            }
+            #endregion
+
+            #region 得到优秀教师内容
+            json = await HttpRequest.Request.Teather_Request();
+            if (json != null)
+            {
+                json_object = (JObject)JsonConvert.DeserializeObject(json);
+                JArray data = (JArray)json_object["data"];
+                ObservableCollection<Model.teacher> teacher_lists = new ObservableCollection<Model.teacher>();
+                for (int i = 0; i < data.Count; i++)
+                {
+                    Model.teacher item = new Model.teacher();
+                    item.name = data[i]["name"].ToString();
+                    item.college = data[i]["college"].ToString();
+                    JArray photo = (JArray)data[i]["photo"];
+                    item.photo_src = photo[0]["photo_src"].ToString();
+                    item.photo_thumbnail_src = photo[0]["photo_thumbnail_src"].ToString();
+                    teacher_lists.Add(item);
+                }
+                viewmodel.Teacher = teacher_lists;
             }
             #endregion
         }
@@ -222,6 +284,9 @@ namespace RedRock_Freshman.Pages
                 case 2: //普通内容
                     {
                         tb.Text = content;
+                        FontWeight weight = new FontWeight();
+                        weight.Weight = 10;
+                        tb.FontWeight = weight;
                         tb.Foreground = App.APPTheme.Gary_Color_Brush;
                         tb.FontSize = 15;
                         tb.LineHeight = 26;
@@ -285,6 +350,46 @@ namespace RedRock_Freshman.Pages
         {
             webview.SetNavigationState("1,0");
             is_navigate_webview = false;
+        }
+
+        private void XueZi_Rectangle_Loaded(object sender, RoutedEventArgs e)
+        {
+            Binding binding1 = new Binding();
+            binding1.Source = viewmodel;
+            binding1.Path = new PropertyPath("XueZi_Height");
+            (sender as Rectangle).SetBinding(Rectangle.HeightProperty, binding1);
+            Binding binding2 = new Binding();
+            binding2.Source = viewmodel;
+            binding2.Path = new PropertyPath("XueZi_Width");
+            (sender as Rectangle).SetBinding(Rectangle.WidthProperty, binding2);
+        }
+
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is Model.xuezi)
+            {
+                detail_img.ImageSource = new BitmapImage(new Uri((e.ClickedItem as Model.xuezi).photo_thumbnail_src, UriKind.Absolute));
+                detail_title.Text = (e.ClickedItem as Model.xuezi).name;
+                detail_content.Text = (e.ClickedItem as Model.xuezi).introduction;
+            }
+            else if(e.ClickedItem is Model.teacher)
+            {
+                detail_img.ImageSource = new BitmapImage(new Uri((e.ClickedItem as Model.teacher).photo_thumbnail_src, UriKind.Absolute));
+                detail_title.Text = (e.ClickedItem as Model.teacher).name;
+                detail_content.Text = (e.ClickedItem as Model.teacher).college;
+            }
+            detail_sc.ChangeView(null, 0, null, true);
+            black_background.Visibility = Visibility.Visible;
+            black_background_sb.Begin();
+            detail_popup.IsOpen = true;
+        }
+
+        private void detail_popup_Closed(object sender, object e)
+        {
+            detail_img.ImageSource = null;
+            detail_title.Text = "";
+            detail_content.Text = "";
+            black_background.Visibility = Visibility.Collapsed;
         }
 
         private void back_but_Click(object sender, RoutedEventArgs e)
