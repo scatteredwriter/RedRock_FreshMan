@@ -69,5 +69,20 @@ namespace RedRock_Freshman.Model
         //            xueshengshouce = value;
         //            RaisePropertyChanged(nameof(Xueshengshouce));
         //        }}
+        private string []icon;
+
+        public string []Icon
+        {
+            get
+            {
+                return icon;
+            }
+
+            set
+            {
+                icon = value;
+                RaisePropertyChanged(nameof(Icon));
+            }
+        }
     }
 }

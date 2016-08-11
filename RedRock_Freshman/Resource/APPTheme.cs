@@ -141,6 +141,7 @@ namespace RedRock_Freshman.Resource
             }
         }
 
+
         //内容文字尺寸
         public int Content_Size
         {
@@ -165,7 +166,26 @@ namespace RedRock_Freshman.Resource
             {
                 SetValue(Second_Content_Size_DP, value);
             }
+
         }
+   
+        private SolidColorBrush line_Color;
+        /// <summary>
+        /// 分割线颜色
+        /// </summary>
+        public SolidColorBrush Line_Color
+        {
+            get
+            {
+                return (SolidColorBrush)GetValue(Line_Color_DP);
+            }
+
+            set
+            {
+                SetValue(Line_Color_DP, value);
+            }
+        }
+
 
         public static readonly DependencyProperty APP_Color_Brush_DP = DependencyProperty.Register("APP_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 104, 175, 244)))); //蓝色色调
 
@@ -190,6 +210,6 @@ namespace RedRock_Freshman.Resource
         public static readonly DependencyProperty Content_Size_DP = DependencyProperty.Register("Content_Size", typeof(int), typeof(APPTheme), new PropertyMetadata(15));
 
         public static readonly DependencyProperty Second_Content_Size_DP = DependencyProperty.Register("Second_Content_Size", typeof(int), typeof(APPTheme), new PropertyMetadata(15));
-
+        public static readonly DependencyProperty Line_Color_DP = DependencyProperty.Register("Line_Color", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 239, 240, 242))));
     }
 }

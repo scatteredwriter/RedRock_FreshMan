@@ -27,7 +27,40 @@ namespace RedRock_Freshman.ViewModel
                 RaisePropertyChanged(nameof(Header));
             }
         }
+        /// <summary>
+        /// 放缩键图标
+        /// </summary>
+        private ObservableCollection<string> icon;
 
+        public ObservableCollection<string> Icon
+        {
+            get
+            {
+                return icon;
+            }
+
+            set
+            {
+                icon = value;
+                RaisePropertyChanged(nameof(Icon));
+            }
+        }
+        /// <summary>
+        /// 缩放文本
+        /// </summary>
+        private ObservableCollection<string> text;
+        public ObservableCollection<string> Text
+        {
+            get
+            {
+                return text;
+            }
+
+            set
+            {
+                text = value;
+            }
+        }
         //public ruxue_page Ruxue
         //{
         //    get
@@ -102,6 +135,8 @@ namespace RedRock_Freshman.ViewModel
                 RaisePropertyChanged(nameof(Xueshengshouce));
             }
         }
+
+     
     }
 
 }

@@ -16,13 +16,13 @@ namespace RedRock_Freshman.Converter
             int n = value.ToString().Length;
             char[] a = value.ToString().ToCharArray();
 
-            if (n > 100)
+            if (n > 50)
             {
                 if (App.isReduced[2])
                 {
 
                     string s = "";
-                    for (int i = 0; i < 100; i++)
+                    for (int i = 0; i < 50; i++)
                     {
                         s += a[i];
                     }
@@ -45,4 +45,5 @@ namespace RedRock_Freshman.Converter
             throw new NotImplementedException();
         }
     }
+   
 }

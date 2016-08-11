@@ -314,11 +314,20 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Padding="20,5,20,15" Background="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}">
-            <TextBlock Text="新生攻略" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Button x:Name="back_but" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BackButtonStyle}" Click="back_but_Click">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00E;" />
+                </Button>
+            </Grid>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="新生攻略" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
         <Pivot Name="SPivot" Style="{StaticResource StrategyStyle}" Grid.Row="1" SelectionChanged="SPivot_SelectionChanged">
             <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
@@ -331,60 +340,83 @@
                         <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
                     </Grid>
                 </PivotItem.Header>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <Grid >
-                            <TextBlock Name="anquan" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
-                                       Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Converter={StaticResource expandingConverter0},Mode=OneWay}" TextWrapping="Wrap"/>
-                            <Button Name="anquanButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
+                <!--入学须知-->
+                <ScrollViewer  Name="SViewer" VerticalScrollBarVisibility="Auto">
+                    <StackPanel >
+                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="安全须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+                            <TextBlock Name="anquan" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Converter={StaticResource expandingConverter0},Mode=OneWay}" TextWrapping="Wrap"/>
+                            <Button Name="anquanButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="展开"/>
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        <TextBlock Text="{Binding Text[0]}"/>
+                                        <FontIcon Name="anquanIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[0]}">
                                         </FontIcon>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
                         </Grid>
-                        <Grid >
-                            <TextBlock Name="ruxue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
-                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Ruxue,Converter={StaticResource expandingConverter1}}" TextWrapping="Wrap"/>
-                            <Button Name="ruxueButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="ruxueButton_Click" Style="{StaticResource ExpandingButton}">
+
+                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="入学须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+                            <TextBlock Name="ruxue" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                    Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Ruxue,Converter={StaticResource expandingConverter1}}" TextWrapping="Wrap"/>
+                            <Button Name="ruxueButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="ruxueButton_Click" Style="{StaticResource ExpandingButton}">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="展开"/>
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        <TextBlock Text="{Binding Text[1]}"/>
+                                        <FontIcon Name="ruxueIcon"  FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[1]}">
                                         </FontIcon>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
                         </Grid>
-                        <Grid >
-                            <TextBlock Name="jiangxuejin" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
-                                       Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Jiangxuejin,Converter={StaticResource expandingConverter2}}" TextWrapping="Wrap"/>
-                            <Button Name="jiangxuejinButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="jiangxuejinButton_Click" Style="{StaticResource ExpandingButton}">
+
+
+                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="奖学金设置" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+                            <TextBlock Name="jiangxuejin" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Jiangxuejin,Converter={StaticResource expandingConverter2}}" TextWrapping="Wrap"/>
+                            <Button Name="jiangxuejinButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="jiangxuejinButton_Click" Style="{StaticResource ExpandingButton}">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="展开"/>
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        <TextBlock Text="{Binding Text[2]}"/>
+                                        <FontIcon Name="jiangxuejinIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[2]}">
                                         </FontIcon>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
                         </Grid>
+
                         <Grid >
                             <Grid.RowDefinitions>
                                 <RowDefinition x:Name="jidianGrid" Height="0"/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <WebView Name="JDhtml" Source="ms-appx-web:///Assets/jidian.html" Visibility="Collapsed"/>
-                            <TextBlock Name="xueshengshouce" Grid.Row="1" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"  
+                            <TextBlock Grid.Row="1" Text="学生手册节选" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+
+                            <WebView Name="JDhtml" Source="ms-appx-web:///Assets/jidian.html" Grid.Row="0" Visibility="Collapsed"/>
+                            <TextBlock Name="xueshengshouce" Margin="15,0,15,14" LineHeight="26" Grid.Row="2" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"  
                                        Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Xueshengshouce,Converter={StaticResource expandingConverter3}}" TextWrapping="Wrap"/>
-                            <Button Grid.Row="1" Name="xueshengshouceButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="10" VerticalAlignment="Bottom" Click="xueshengshouceButton_Click" Style="{StaticResource ExpandingButton}">
+                            <Button Grid.Row="2" Margin="0,0,15,14" Name="xueshengshouceButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" VerticalAlignment="Bottom" Click="xueshengshouceButton_Click" Style="{StaticResource ExpandingButton}">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="展开"/>
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="10'" Glyph="&#xe019;">
+                                        <TextBlock Text="{Binding Text[3]}"/>
+                                        <FontIcon Name="xueshengshouceIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[3]}">
                                         </FontIcon>
                                     </StackPanel>
                                 </Button.Content>
@@ -404,7 +436,55 @@
                         <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
                     </Grid>
                 </PivotItem.Header>
+                <ScrollViewer>
+                    <StackPanel>
+                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <StackPanel Margin="15,15,15,15">
+                                <TextBlock Text="从机场到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,15,0,15"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
+                                        <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
+                                    </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <StackPanel Margin="15,15,15,15">
+                                <TextBlock Text="从火车站到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,15,0,15"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <StackPanel Margin="15,15,15,15">
+                                <TextBlock Text="从汽车站到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,15,0,15"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
+                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
             </PivotItem>
+
             <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
                 <PivotItem.Header>
                     <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
@@ -415,6 +495,7 @@
                         <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
                     </Grid>
                 </PivotItem.Header>
+
             </PivotItem>
             <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
                 <PivotItem.Header>
