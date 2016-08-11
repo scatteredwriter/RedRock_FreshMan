@@ -92,6 +92,7 @@
     <Content Include="Assets\首页1.png" />
     <Content Include="Assets\首页2.png" />
     <Content Include="Assets\首页3.png" />
+    <Content Include="Assets\jidian.html" />
     <Content Include="Json\fengcai_header_lists.json" />
     <Content Include="Json\fengcai_zuzhi_intro.json" />
     <Content Include="Json\fengcai_zuzhi_lists.json" />
@@ -103,11 +104,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\ExpandingConverter1.cs" />
+    <Compile Include="Converter\ExpandingConverter3.cs" />
+    <Compile Include="Converter\ExpandingConverter2.cs" />
+    <Compile Include="Converter\ExpandingConverter0.cs" />
     <Compile Include="HttpRequest\Request.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\fengcaiheaders.cs" />
+    <Compile Include="Model\ruxue_page.cs" />
     <Compile Include="Model\StrategyHeader.cs" />
     <Compile Include="Model\yuanchuang.cs" />
     <Compile Include="Model\zuzhi.cs" />
@@ -139,6 +146,10 @@
     <None Include="RedRock_Freshman_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Notepad\anquan.txt" />
+    <Content Include="Notepad\jiangxuejin.txt" />
+    <Content Include="Notepad\ruxue.txt" />
+    <Content Include="Notepad\xueshengshouce.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -169,6 +180,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\ExpandingStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Pages\WebViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +194,9 @@
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataBase\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
