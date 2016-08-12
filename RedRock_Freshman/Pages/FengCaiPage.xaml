@@ -361,14 +361,8 @@
             </Setter>
         </Style>
         <converter:DetailMarginConverter x:Key="DetailMarginConverter"></converter:DetailMarginConverter>
-        <Storyboard x:Name="webview_forward_sb">
-            <DoubleAnimation To="0" Storyboard.TargetName="webview_trans" Storyboard.TargetProperty="X" Duration="0:0:0.3"></DoubleAnimation>
-        </Storyboard>
-        <Storyboard x:Name="webview_back_sb">
-            <DoubleAnimation From="0" Storyboard.TargetName="webview_trans" Storyboard.TargetProperty="X" Duration="0:0:0.3"></DoubleAnimation>
-        </Storyboard>
         <Storyboard x:Name="black_background_sb">
-            <DoubleAnimation From="0" To="0.5" Storyboard.TargetName="black_background" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2"></DoubleAnimation>
+            <DoubleAnimation From="0" To="0.5" Storyboard.TargetName="black_background" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4"></DoubleAnimation>
         </Storyboard>
     </Page.Resources>
 
@@ -647,14 +641,9 @@
             </Popup.Child>
             <Popup.ChildTransitions>
                 <TransitionCollection>
-                    <EdgeUIThemeTransition Edge="Bottom"></EdgeUIThemeTransition>
+                    <PaneThemeTransition Edge="Bottom"></PaneThemeTransition>
                 </TransitionCollection>
             </Popup.ChildTransitions>
         </Popup>
-        <Frame x:Name="webview" Grid.Row="0" Grid.RowSpan="2">
-            <Frame.RenderTransform>
-                <TranslateTransform x:Name="webview_trans" X="0" Y="0"></TranslateTransform>
-            </Frame.RenderTransform>
-        </Frame>
     </Grid>
 </Page>

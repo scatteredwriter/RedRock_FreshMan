@@ -37,8 +37,6 @@ namespace RedRock_Freshman.Pages
         private int zuzhi_listview_index;
         private double[] pivotitem1_ver_offest;
 
-        private bool is_navigate_webview = false;
-
         private ViewModel.FengCaiViewModel viewmodel;
         public static FengCaiPage fengcaipage;
 
@@ -51,7 +49,6 @@ namespace RedRock_Freshman.Pages
             this.DataContext = viewmodel;
             fengcaipage = this;
             this.SizeChanged += FengCaiPage_SizeChanged;
-            webview_back_sb.Completed += Webview_back_sb_Completed;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -75,10 +72,6 @@ namespace RedRock_Freshman.Pages
         {
             viewmodel.Page_Width = e.NewSize.Width;
             viewmodel.Page_Height = e.NewSize.Height;
-            if (is_navigate_webview == false)
-            {
-                webview_trans.X = e.NewSize.Width;
-            }
         }
 
         private async Task First_Step()
@@ -332,24 +325,9 @@ namespace RedRock_Freshman.Pages
             zuzhi_listview_index = zuzhi_listview.SelectedIndex;
         }
 
-        private void yc_listview_ItemClick(object sender, ItemClickEventArgs e)
+        private async void yc_listview_ItemClick(object sender, ItemClickEventArgs e)
         {
-            webview.Navigate(typeof(WebViewPage), e.ClickedItem);
-            is_navigate_webview = true;
-            (webview_forward_sb.Children[0] as DoubleAnimation).From = webview_trans.X;
-            webview_forward_sb.Begin();
-        }
-
-        public void WebView_Back()
-        {
-            (webview_back_sb.Children[0] as DoubleAnimation).To = webview.ActualWidth;
-            webview_back_sb.Begin();
-        }
-
-        private void Webview_back_sb_Completed(object sender, object e)
-        {
-            webview.SetNavigationState("1,0");
-            is_navigate_webview = false;
+            await Launcher.LaunchUriAsync(new Uri((e.ClickedItem as Model.yuanchuang).video_url));
         }
 
         private void XueZi_Rectangle_Loaded(object sender, RoutedEventArgs e)
@@ -372,7 +350,7 @@ namespace RedRock_Freshman.Pages
                 detail_title.Text = (e.ClickedItem as Model.xuezi).name;
                 detail_content.Text = (e.ClickedItem as Model.xuezi).introduction;
             }
-            else if(e.ClickedItem is Model.teacher)
+            else if (e.ClickedItem is Model.teacher)
             {
                 detail_img.ImageSource = new BitmapImage(new Uri((e.ClickedItem as Model.teacher).photo_thumbnail_src, UriKind.Absolute));
                 detail_title.Text = (e.ClickedItem as Model.teacher).name;

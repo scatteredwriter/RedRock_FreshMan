@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -38,6 +39,7 @@ namespace RedRock_Freshman.Pages
             go_back_sb.Completed += Go_back_sb_Completed;
             this.SizeChanged += FirstPage_SizeChanged;
             Window.Current.SizeChanged += Current_SizeChanged;
+            second_frame.Navigated += Second_frame_Navigated;
         }
 
         private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
@@ -107,7 +109,6 @@ namespace RedRock_Freshman.Pages
                     click_index = i;
                 }
             }
-            Second_Page_Forwoard();
             switch (click_index)
             {
                 case 0:
@@ -123,6 +124,12 @@ namespace RedRock_Freshman.Pages
                         second_frame.Navigate(typeof(FengCaiPage));
                     }; break;
             }
+        }
+
+        private async void Second_frame_Navigated(object sender, NavigationEventArgs e)
+        {
+            await Task.Delay(200);
+            Second_Page_Forwoard();
         }
 
         private void back_but_Click(object sender, RoutedEventArgs e)
