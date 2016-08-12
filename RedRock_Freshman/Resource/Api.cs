@@ -14,6 +14,11 @@ namespace RedRock_Freshman.Resource
         public const string yuanchuang_api = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/WelcomeFreshman/cquptOriginal";
 
         /// <summary>
+        /// 最美重邮接口，参数page size
+        /// </summary>
+        public const string zuimei_api = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/WelcomeFreshman/cquptView";
+
+        /// <summary>
         /// 优秀教师接口，参数page size
         /// </summary>
         public const string youxiujiaoshi_api = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/WelcomeFreshman/outstandingTeacher";
