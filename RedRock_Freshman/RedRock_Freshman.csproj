@@ -106,6 +106,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\DetailMarginConverter.cs" />
     <Compile Include="Converter\ExpandingConverter1.cs" />
     <Compile Include="Converter\ExpandingConverter3.cs" />
     <Compile Include="Converter\ExpandingConverter2.cs" />
@@ -124,6 +125,8 @@
     <Compile Include="Model\richangshenghuo.cs" />
     <Compile Include="Model\ruxue_page.cs" />
     <Compile Include="Model\StrategyHeader.cs" />
+    <Compile Include="Model\teacher.cs" />
+    <Compile Include="Model\xuezi.cs" />
     <Compile Include="Model\yuanchuang.cs" />
     <Compile Include="Model\zhoubianmeijing.cs" />
     <Compile Include="Model\zhoubianmeishi.cs" />
