@@ -72,7 +72,7 @@ namespace RedRock_Freshman.Pages
                 #endregion
                 await PivotItem1_First_Step();
 
-                await Task.Delay(100);
+                //await Task.Delay(100);
             }
         }
         private void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)

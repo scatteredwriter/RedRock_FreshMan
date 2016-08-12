@@ -23,6 +23,8 @@ namespace RedRock_Freshman.Pages
     /// </summary>
     public sealed partial class FirstPage : Page
     {
+        private int click_index;
+
         private ViewModel.FirstPageViewModel viewmodel = new ViewModel.FirstPageViewModel();
 
         public static FirstPage firstpage;
@@ -35,6 +37,23 @@ namespace RedRock_Freshman.Pages
             firstpage = this;
             go_back_sb.Completed += Go_back_sb_Completed;
             this.SizeChanged += FirstPage_SizeChanged;
+            Window.Current.SizeChanged += Current_SizeChanged;
+        }
+
+        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            if (second_frame.Content == null)
+            {
+                if (e.Size.Width != this.ActualWidth)
+                {
+                    second_frame_trans.X = e.Size.Width - this.ActualWidth;
+                }
+                else
+                {
+                    second_frame_trans.X = this.ActualWidth;
+                }
+            }
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -45,6 +64,14 @@ namespace RedRock_Freshman.Pages
             {
                 viewmodel.Page_Height = this.Height;
                 viewmodel.Page_Width = this.Width;
+                if (Window.Current.Bounds.Width != this.ActualWidth)
+                {
+                    second_frame_trans.X = Window.Current.Bounds.Width - this.ActualWidth;
+                }
+                else
+                {
+                    second_frame_trans.X = this.ActualWidth;
+                }
             }
         }
 
@@ -62,31 +89,26 @@ namespace RedRock_Freshman.Pages
 
         private void Go_back_sb_Completed(object sender, object e)
         {
-            second_frame.SetNavigationState("1,0");
+            second_frame.Content = null;
         }
 
         private void FirstPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             viewmodel.Page_Height = e.NewSize.Height;
             viewmodel.Page_Width = e.NewSize.Width;
-            if (second_frame.GetNavigationState() == "1,0")
-            {
-                second_frame_trans.X = e.NewSize.Width;
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int index = 0;
             for (int i = 0; i < ((sender as Button).Parent as Grid).Children.Count; i++)
             {
                 if (((sender as Button).Parent as Grid).Children[i] == sender as Button)
                 {
-                    index = i;
+                    click_index = i;
                 }
             }
             Second_Page_Forwoard();
-            switch (index)
+            switch (click_index)
             {
                 case 0:
                     {

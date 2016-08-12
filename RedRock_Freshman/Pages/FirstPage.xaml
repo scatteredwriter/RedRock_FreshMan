@@ -95,7 +95,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Padding="20,5,20,15" Background="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}">
+        <Grid Grid.Row="0" Padding="10,5,10,15" Background="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -124,6 +124,11 @@
             </Button>
         </Grid>
         <Frame x:Name="second_frame" Grid.Row="0" Grid.RowSpan="2">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition Edge="Right"></PaneThemeTransition>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
             <Frame.RenderTransform>
                 <TranslateTransform x:Name="second_frame_trans" X="0" Y="0"></TranslateTransform>
             </Frame.RenderTransform>
