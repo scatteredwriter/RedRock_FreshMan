@@ -99,7 +99,7 @@ namespace RedRock_Freshman.Pages
                 //await Task.Delay(100);
             }
         }
-        private async void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -441,7 +441,7 @@ namespace RedRock_Freshman.Pages
             StorageFile xueshengshouce_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/xueshengshouce.txt", UriKind.Absolute));
             viewmodel.Xueshengshouce = await FileIO.ReadTextAsync(xueshengshouce_File);
         }
-        private async void LXQ_qqGroup()
+        private void LXQ_qqGroup()
         {
             using (var conn = Model.getDB.GetDblxqConnection())
             {
@@ -460,7 +460,7 @@ namespace RedRock_Freshman.Pages
             }
 
         }
-        private async void XSQ_qqGroup()
+        private void XSQ_qqGroup()
         {
             using (var conn = Model.getDB.GetDbxsqConnection())
             {
