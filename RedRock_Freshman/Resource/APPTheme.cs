@@ -186,7 +186,25 @@ namespace RedRock_Freshman.Resource
             }
         }
 
+        private SolidColorBrush Font_Bule;
+        /// <summary>
+        /// 强调字体
+        /// </summary>
+        public SolidColorBrush Font_Bule1
+        {
+            get
+            {
+                return (SolidColorBrush)GetValue(Font_Blue_Dp);
+            }
 
+            set
+            {
+                SetValue(Font_Blue_Dp, value);
+            }
+        }
+
+
+        public static readonly DependencyProperty Font_Blue_Dp = DependencyProperty.Register("Font_Blue", typeof(SolidColorBrush),typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 140, 196, 246))));
         public static readonly DependencyProperty APP_Color_Brush_DP = DependencyProperty.Register("APP_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 104, 175, 244)))); //蓝色色调
 
         public static readonly DependencyProperty Gary_Color_Brush_DP = DependencyProperty.Register("Gary_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 136, 136, 136)))); //5b5b5b

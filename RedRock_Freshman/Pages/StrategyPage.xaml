@@ -1,12 +1,15 @@
 ﻿<Page
+    x:Name="mpage"
     x:Class="RedRock_Freshman.Pages.StrategyPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RedRock_Freshman.Pages"
     xmlns:viewmodel="using:RedRock_Freshman.ViewModel"
+    xmlns:model="using:RedRock_Freshman.Model"
     xmlns:converter="using:RedRock_Freshman.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Notepad="using:RedRock_Freshman.Notepad"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -14,6 +17,7 @@
         <converter:ExpandingConverter1 x:Key="expandingConverter1"/>
         <converter:ExpandingConverter2 x:Key="expandingConverter2"/>
         <converter:ExpandingConverter3 x:Key="expandingConverter3"/>
+        <converter:JsonConverter x:Key="jsonConverter"/>
         <Style x:Key="StrategyStyle" TargetType="Pivot">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="IsTabStop" Value="False"/>
@@ -329,218 +333,440 @@
             </Grid>
             <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="新生攻略" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
-        <Pivot Name="SPivot" Style="{StaticResource StrategyStyle}" Grid.Row="1" SelectionChanged="SPivot_SelectionChanged">
-            <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
-                <PivotItem.Header>
-                    <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="0" Y="2"></TranslateTransform>
-                        </Grid.RenderTransform>
-                        <TextBlock Text="{Binding Header[0].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
-                    </Grid>
-                </PivotItem.Header>
-                <!--入学须知-->
-                <ScrollViewer  Name="SViewer" VerticalScrollBarVisibility="Auto">
-                    <StackPanel >
-                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="安全须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
-                            <TextBlock Name="anquan" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+        <Grid Grid.Row="1">
+
+            <Pivot Name="SPivot" Style="{StaticResource StrategyStyle}" Grid.Row="1" SelectionChanged="SPivot_SelectionChanged">
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[0].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+                    <!--入学须知-->
+                    <ScrollViewer  Name="SViewer" VerticalScrollBarVisibility="Auto">
+                        <StackPanel >
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="安全须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+                                <TextBlock Name="anquan" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
                                       Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Converter={StaticResource expandingConverter0},Mode=OneWay}" TextWrapping="Wrap"/>
-                            <Button Name="anquanButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Text[0]}"/>
-                                        <FontIcon Name="anquanIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[0]}">
-                                        </FontIcon>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                        </Grid>
+                                <Button Name="anquanButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Text[0]}"/>
+                                            <FontIcon Name="anquanIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[0]}">
+                                            </FontIcon>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
 
-                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="入学须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
-                            <TextBlock Name="ruxue" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="入学须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+                                <TextBlock Name="ruxue" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
                                     Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Ruxue,Converter={StaticResource expandingConverter1}}" TextWrapping="Wrap"/>
-                            <Button Name="ruxueButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="ruxueButton_Click" Style="{StaticResource ExpandingButton}">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Text[1]}"/>
-                                        <FontIcon Name="ruxueIcon"  FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[1]}">
-                                        </FontIcon>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                        </Grid>
+                                <Button Name="ruxueButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="ruxueButton_Click" Style="{StaticResource ExpandingButton}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Text[1]}"/>
+                                            <FontIcon Name="ruxueIcon"  FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[1]}">
+                                            </FontIcon>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
 
 
-                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="奖学金设置" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
-                            <TextBlock Name="jiangxuejin" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="奖学金设置" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+                                <TextBlock Name="jiangxuejin" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
                                       Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Jiangxuejin,Converter={StaticResource expandingConverter2}}" TextWrapping="Wrap"/>
-                            <Button Name="jiangxuejinButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="jiangxuejinButton_Click" Style="{StaticResource ExpandingButton}">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Text[2]}"/>
-                                        <FontIcon Name="jiangxuejinIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[2]}">
-                                        </FontIcon>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                        </Grid>
+                                <Button Name="jiangxuejinButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="jiangxuejinButton_Click" Style="{StaticResource ExpandingButton}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Text[2]}"/>
+                                            <FontIcon Name="jiangxuejinIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[2]}">
+                                            </FontIcon>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
 
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition x:Name="jidianGrid" Height="0"/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="1" Text="学生手册节选" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition x:Name="jidianGrid" Height="0"/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Text="学生手册节选" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
 
-                            <WebView Name="JDhtml" Source="ms-appx-web:///Assets/jidian.html" Grid.Row="0" Visibility="Collapsed"/>
-                            <TextBlock Name="xueshengshouce" Margin="15,0,15,14" LineHeight="26" Grid.Row="2" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"  
+                                <WebView Name="JDhtml" Source="ms-appx-web:///Assets/jidian.html" Grid.Row="0" Visibility="Collapsed"/>
+                                <TextBlock Name="xueshengshouce" Margin="15,0,15,14" LineHeight="26" Grid.Row="2" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"  
                                        Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Xueshengshouce,Converter={StaticResource expandingConverter3}}" TextWrapping="Wrap"/>
-                            <Button Grid.Row="2" Margin="0,0,15,14" Name="xueshengshouceButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" VerticalAlignment="Bottom" Click="xueshengshouceButton_Click" Style="{StaticResource ExpandingButton}">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Text[3]}"/>
-                                        <FontIcon Name="xueshengshouceIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[3]}">
-                                        </FontIcon>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
+                                <Button Grid.Row="2" Margin="0,0,15,14" Name="xueshengshouceButton" HorizontalAlignment="Right"  Foreground="Blue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" VerticalAlignment="Bottom" Click="xueshengshouceButton_Click" Style="{StaticResource ExpandingButton}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Text[3]}"/>
+                                            <FontIcon Name="xueshengshouceIcon" FontFamily="Segoe MDL2 Assets" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Glyph="{Binding Icon[3]}">
+                                            </FontIcon>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </PivotItem>
+
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[1].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
                         </Grid>
-                    </StackPanel>
+                    </PivotItem.Header>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <StackPanel Name="PlaneSP" Margin="15,15,15,15">
+                                    <TextBlock Text="从机场到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <Notepad:WaysData_Plane ></Notepad:WaysData_Plane>
+                                </StackPanel>
+                            </Grid>
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <StackPanel Name="TrainSP" Margin="15,15,15,15">
+                                    <TextBlock Text="从火车站到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <Notepad:WayData_Train/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <StackPanel Margin="15,15,15,15">
+                                    <TextBlock Text="从汽车站到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <Notepad:WayData_Bus></Notepad:WayData_Bus>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </PivotItem>
+
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[2].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ListView ItemsSource="{x:Bind viewmodel.QsIntroduce}">
+                            <ListView.ItemTemplate >
+                                <DataTemplate x:DataType="model:qinshiIntroduce">
+                                    <Grid  BorderThickness="0,0,0,1"  BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle   Height="80" Width="80" RadiusX="13" RadiusY="13" Tapped="Rectangle_Tapped">
+                                            <Rectangle.Fill>
+                                                <ImageBrush x:Name="SSImage" ImageSource="{x:Bind Uri,Mode=OneWay}" Stretch="Uniform">
+                                                </ImageBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <Grid Grid.Column="1" Margin="16,19,0,15">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="介绍" FontSize="18" Grid.Row="0" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                            <TextBlock Name="Introduction" Grid.Row="1" Text="{x:Bind Introduction ,Converter={StaticResource jsonConverter}}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                        </Grid>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </Grid>
+                </PivotItem>
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[3].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+                    <ScrollViewer>
+
+                        <StackPanel>
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <StackPanel Margin="15,14,15,15">
+                                    <TextBlock Text="这些东西很重要" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <TextBlock Text="{Binding QdContent[0].content}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid >
+                                <StackPanel Margin="15,14,15,20">
+                                    <TextBlock Text="生活上的细节也不能够忽视" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <TextBlock Text="{Binding QdContent[1].content}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <StackPanel Margin="15,14,15,20">
+                                    <TextBlock Text="洗护用品方面" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <TextBlock Text="{Binding QdContent[2].content}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <StackPanel Margin="15,14,15,20">
+                                    <TextBlock Text="衣物方面" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <TextBlock Text="{Binding QdContent[3].content}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <StackPanel Margin="15,14,15,20">
+                                    <TextBlock Text="寝室住宿方面" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <TextBlock Text="{Binding QdContent[4].content}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[4].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+
+                    <ScrollViewer Name="GroupSVName">
+
+                        <StackPanel>
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <StackPanel Margin="15,14,15,15">
+                                    <TextBlock Text="新生群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <TextBlock Text="{Binding AllQQInfo.XYQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" TextWrapping="Wrap">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                <StackPanel Margin="15,14,15,15">
+                                    <TextBlock Text="老乡群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                    <TextBlock Text="{Binding AllQQInfo.LXQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[5].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+                    <ListView ItemsSource="{x:Bind viewmodel.RichangContent}" BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                        <ListView.ItemTemplate >
+                            <DataTemplate x:DataType="model:richangshenghuo">
+                                <Grid   BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle   Height="80" Width="80" RadiusX="13" RadiusY="13" Tapped="Rectangle_Tapped">
+                                        <Rectangle.Fill>
+                                            <ImageBrush  ImageSource="{x:Bind Uri,Mode=OneWay}" Stretch="Uniform">
+                                            </ImageBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Grid Grid.Column="1" Margin="16,19,0,15">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{x:Bind Name}" FontSize="18" Grid.Row="0" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                        <Grid Grid.Row="1" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="位置:" Grid.Column="0" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" />
+                                            <TextBlock Name="address" Grid.Column="1" Text="{x:Bind Address ,Converter={StaticResource jsonConverter}}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </PivotItem>
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[6].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+                    <ListView ItemsSource="{x:Bind viewmodel.MsContent}" BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                        <ListView.ItemTemplate >
+                            <DataTemplate x:DataType="model:zhoubianmeishi">
+                                <Grid   BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle   Height="80" Width="80" RadiusX="13" RadiusY="13" Tapped="Rectangle_Tapped">
+                                        <Rectangle.Fill>
+                                            <ImageBrush  ImageSource="{x:Bind Uri,Mode=OneWay}" Stretch="Uniform">
+                                            </ImageBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Grid Grid.Column="1" Margin="16,19,0,15">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{x:Bind Name}" FontSize="18" Grid.Row="0" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                        <StackPanel Grid.Row="1">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="简介:" Grid.Column="0" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" />
+                                                <TextBlock Name="introduction" Grid.Column="1" Text="{x:Bind Introduction ,Converter={StaticResource jsonConverter}}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                            </Grid>
+                                            <Grid  >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="位置:" Grid.Column="0" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" />
+                                                <TextBlock Name="address" Grid.Column="1" Text="{x:Bind Address ,Converter={StaticResource jsonConverter}}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </PivotItem>
+                <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock Text="{Binding Header[7].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+                    <ListView ItemsSource="{x:Bind viewmodel.MjContent}" BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                        <ListView.ItemTemplate >
+                            <DataTemplate x:DataType="model:zhoubianmeijing">
+                                <Grid   BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle   Height="80" Width="80" RadiusX="13" RadiusY="13" Tapped="Rectangle_Tapped">
+                                        <Rectangle.Fill>
+                                            <ImageBrush  ImageSource="{x:Bind Uri,Mode=OneWay}" Stretch="Uniform">
+                                            </ImageBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Grid Grid.Column="1" Margin="16,19,0,15">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{x:Bind Name}" FontSize="18" Grid.Row="0" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                        <StackPanel Grid.Row="1">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="简介:" Grid.Column="0" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" />
+                                                <TextBlock Name="introduction" Grid.Column="1" Text="{x:Bind Introduction ,Converter={StaticResource jsonConverter}}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                            </Grid>
+                                            <Grid  >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="位置:" Grid.Column="0" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" />
+                                                <TextBlock Name="address" Grid.Column="1" Text="{x:Bind Tourroute ,Converter={StaticResource jsonConverter}}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
+                                     Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </PivotItem>
+            </Pivot>
+            <Grid Name="showimage"  Visibility="Collapsed">
+                <Grid  Background="Black" Opacity="0.7">
+                </Grid>
+                <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="2" >
+                    <Image x:Name="bigImage" Stretch="Uniform" PointerExited="bigImage_PointerExited" Tapped="bigImage_Tapped" PointerMoved="bigImage_PointerMoved" PointerPressed="bigImage_PointerPressed" PointerReleased="bigImage_PointerReleased"  Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}"></Image>
+                    <!--<Image Name="bigImage" Stretch="Fill" Tapped="bigImage_Tapped" Width="{Binding ElementName=item1,Mode=OneWay}"></Image>-->
                 </ScrollViewer>
-            </PivotItem>
-
-            <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
-                <PivotItem.Header>
-                    <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="0" Y="2"></TranslateTransform>
-                        </Grid.RenderTransform>
-                        <TextBlock Text="{Binding Header[1].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
-                    </Grid>
-                </PivotItem.Header>
-                <ScrollViewer>
-                    <StackPanel>
-                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                            <StackPanel Margin="15,15,15,15">
-                                <TextBlock Text="从机场到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,15,0,15"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
-                                        <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
-                                    </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                            <StackPanel Margin="15,15,15,15">
-                                <TextBlock Text="从火车站到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,15,0,15"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                        <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                            <StackPanel Margin="15,15,15,15">
-                                <TextBlock Text="从汽车站到学校" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,15,0,15"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush_DP}" />
-                                    <TextBlock Text="{Binding}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </ScrollViewer>
-            </PivotItem>
-
-            <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
-                <PivotItem.Header>
-                    <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="0" Y="2"></TranslateTransform>
-                        </Grid.RenderTransform>
-                        <TextBlock Text="{Binding Header[2].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
-                    </Grid>
-                </PivotItem.Header>
-
-            </PivotItem>
-            <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
-                <PivotItem.Header>
-                    <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="0" Y="2"></TranslateTransform>
-                        </Grid.RenderTransform>
-                        <TextBlock Text="{Binding Header[3].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
-                    </Grid>
-                </PivotItem.Header>
-            </PivotItem>
-            <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
-                <PivotItem.Header>
-                    <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="0" Y="2"></TranslateTransform>
-                        </Grid.RenderTransform>
-                        <TextBlock Text="{Binding Header[4].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
-                    </Grid>
-                </PivotItem.Header>
-            </PivotItem>
-            <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
-                <PivotItem.Header>
-                    <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="0" Y="2"></TranslateTransform>
-                        </Grid.RenderTransform>
-                        <TextBlock Text="{Binding Header[5].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
-                    </Grid>
-                </PivotItem.Header>
-            </PivotItem>
-            <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
-                <PivotItem.Header>
-                    <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                        <Grid.RenderTransform>
-                            <TranslateTransform X="0" Y="2"></TranslateTransform>
-                        </Grid.RenderTransform>
-                        <TextBlock Text="{Binding Header[6].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
-                    </Grid>
-                </PivotItem.Header>
-            </PivotItem>
-        </Pivot>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>
