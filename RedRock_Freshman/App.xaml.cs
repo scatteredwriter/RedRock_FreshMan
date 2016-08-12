@@ -27,6 +27,7 @@ namespace RedRock_Freshman
 
         public static Resource.APPTheme APPTheme = new Resource.APPTheme();
         public static bool[] isReduced= { true,true,true,true};
+        public static bool[] isLoading = { false, false, false, false, false, false,false ,false};
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。

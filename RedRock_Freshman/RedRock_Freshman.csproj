@@ -98,6 +98,8 @@
     <Content Include="Json\fengcai_zuzhi_lists.json" />
     <Content Include="Json\fengcai_zuimei.json" />
     <Content Include="Json\strategy_header_lists.json" />
+    <Content Include="DataBase\qq_Group.db" />
+    <Content Include="Json\必备清单.json" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -109,19 +111,36 @@
     <Compile Include="Converter\ExpandingConverter3.cs" />
     <Compile Include="Converter\ExpandingConverter2.cs" />
     <Compile Include="Converter\ExpandingConverter0.cs" />
+    <Compile Include="Converter\JsonConverter.cs" />
     <Compile Include="HttpRequest\Request.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\fengcaiheaders.cs" />
+    <Compile Include="Model\getDB.cs" />
+    <Compile Include="Model\qindan_content.cs" />
+    <Compile Include="Model\qinshiIntroduce.cs" />
+    <Compile Include="Model\QQGroup_DB.cs" />
+    <Compile Include="Model\richangshenghuo.cs" />
     <Compile Include="Model\ruxue_page.cs" />
     <Compile Include="Model\StrategyHeader.cs" />
     <Compile Include="Model\teacher.cs" />
     <Compile Include="Model\xuezi.cs" />
     <Compile Include="Model\yuanchuang.cs" />
+    <Compile Include="Model\zhoubianmeijing.cs" />
+    <Compile Include="Model\zhoubianmeishi.cs" />
     <Compile Include="Model\zuzhi.cs" />
     <Compile Include="Model\zuzhi_intro.cs" />
+    <Compile Include="Notepad\WayData_Bus.xaml.cs">
+      <DependentUpon>WayData_Bus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Notepad\WayData_Train.xaml.cs">
+      <DependentUpon>WayData_Train.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Notepad\WaysData_Plane.xaml.cs">
+      <DependentUpon>WaysData_Plane.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\FengCaiPage.xaml.cs">
       <DependentUpon>FengCaiPage.xaml</DependentUpon>
     </Compile>
@@ -168,6 +187,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Notepad\WayData_Bus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Notepad\WayData_Train.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Notepad\WaysData_Plane.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FengCaiPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,12 +218,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.13.0">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataBase\" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
